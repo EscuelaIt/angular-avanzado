@@ -11,7 +11,7 @@ import { Observable } from "rxjs";
 @Injectable()
 export class TokenInterceptorService
 	implements HttpInterceptor {
-	private token: string = "";
+	private token = "";
 
 	constructor(private store: GlobalStore) {
 		this.subscribeToTokenChanges();

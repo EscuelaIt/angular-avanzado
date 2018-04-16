@@ -1,18 +1,19 @@
 import {
-  Component,
-  OnInit,
-  Output,
-  EventEmitter,
-  Input,
-  SimpleChanges,
-  ChangeDetectionStrategy
+	Component,
+	OnInit,
+	Output,
+	EventEmitter,
+	Input,
+	SimpleChanges,
+	ChangeDetectionStrategy,
+	OnChanges
 } from "@angular/core";
 import { JournalEntry } from "@routes/month/state/models/journal_entry.model";
 
 @Component({
-  selector: "ab-expenses-list",
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+	selector: "ab-expenses-list",
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	template: `
   <ab-widget-header mode="h3" caption="Expenses" value="{{ totalAmount }} €"></ab-widget-header>
   <table>
     <thead>
@@ -33,25 +34,27 @@ import { JournalEntry } from "@routes/month/state/models/journal_entry.model";
     </tbody>
   </table>
   `,
-  styles: []
+	styles: []
 })
-export class ExpensesListComponent implements OnInit {
-  @Input() public expensesToList: JournalEntry[] = [];
-  @Output() public deleteExpense = new EventEmitter<JournalEntry>();
-  public totalAmount: number;
+export class ExpensesListComponent
+	implements OnInit, OnChanges {
+	@Input() public expensesToList: JournalEntry[] = [];
+	@Output()
+	public deleteExpense = new EventEmitter<JournalEntry>();
+	public totalAmount: number;
 
-  constructor() {}
+	constructor() {}
 
-  ngOnInit() {}
+	ngOnInit() {}
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (this.expensesToList) {
-      this.totalAmount = this.expensesToList
-        .map(p => p.amount)
-        .reduce((state, current) => state + current, 0);
-    }
-  }
-  public delete(expense: JournalEntry) {
-    this.deleteExpense.emit(expense);
-  }
+	ngOnChanges(changes: SimpleChanges): void {
+		if (this.expensesToList) {
+			this.totalAmount = this.expensesToList
+				.map(p => p.amount)
+				.reduce((state, current) => state + current, 0);
+		}
+	}
+	public delete(expense: JournalEntry) {
+		this.deleteExpense.emit(expense);
+	}
 }

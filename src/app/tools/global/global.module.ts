@@ -4,9 +4,9 @@ import {
 	HttpClientModule
 } from "@angular/common/http";
 import { NgModule } from "@angular/core";
-import { CatchInterceptorService } from "@tools/global/catch-interceptor.service";
+import { CatchInterceptorService } from "@tools/global/interceptors/catch-interceptor.service";
+import { TokenInterceptorService } from "@tools/global/interceptors/token-interceptor.service";
 import { GlobalStore } from "@tools/global/state/global-store.state";
-import { TokenInterceptorService } from "@tools/global/token-interceptor.service";
 
 @NgModule({
 	imports: [CommonModule, HttpClientModule],

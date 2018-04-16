@@ -4,25 +4,29 @@ import { GlobalStore } from "@tools/global/state/global-store.state";
 @Component({
 	selector: "ab-header",
 	template: `
-    <header>
+    <header class="container">
       <a class="button button-clear" routerLink="">Kakebo</a>
       <a class="button button-clear" routerLink="about">About</a>
-      <a *ngIf="userIsAnonymous;else wellcome" class="button button-clear" routerLink="credentials/login">Login</a>
-      <ng-template #wellcome>Hello !</ng-template>
+      <a *ngIf="isAnonymous;else welcome" class="button button-clear" routerLink="credentials/login">Login</a>
+      <ng-template #welcome>Hello</ng-template>
+      <span [ngClass]="['float-right']">{{ message }}</span>
     </header>
-    
   `,
 	styles: []
 })
 export class HeaderComponent implements OnInit {
-	public userIsAnonymous;
+	public isAnonymous = true;
+	public message: string;
 	constructor(private store: GlobalStore) {}
 
 	ngOnInit() {
 		this.store
 			.selectUserToken$()
 			.subscribe(
-				(res: string) => (this.userIsAnonymous = res === "")
+				(res: string) => (this.isAnonymous = res === "")
 			);
+		this.store
+			.selectUserMessage$()
+			.subscribe((res: string) => (this.message = res));
 	}
 }

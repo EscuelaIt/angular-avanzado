@@ -39,7 +39,7 @@ export class CatchInterceptorService
 	private logResponse = (event: HttpEvent<any>) => {
 		if (event instanceof HttpResponse) {
 			const elapsed_ms = Date.now() - this.started;
-			console.debug(
+			console.log(
 				`Request for ${event.url} took ${elapsed_ms} ms.`
 			);
 		}

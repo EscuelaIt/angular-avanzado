@@ -1,18 +1,22 @@
 import {
-  Component,
-  OnInit,
-  EventEmitter,
-  Output,
-  ChangeDetectionStrategy,
-  Input
+	Component,
+	OnInit,
+	EventEmitter,
+	Output,
+	ChangeDetectionStrategy,
+	Input
 } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import {
+	FormGroup,
+	FormBuilder,
+	Validators
+} from "@angular/forms";
 import { JournalEntry } from "@routes/month/state/models/journal_entry.model";
 
 @Component({
-  selector: "ab-prevision",
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+	selector: "ab-prevision",
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	template: `
   <ab-widget-header mode="h3" caption="Set your Previsions" value=""></ab-widget-header>
   <form [formGroup]="form" (submit)="submit(form.value)">
     <fieldset>
@@ -29,38 +33,40 @@ import { JournalEntry } from "@routes/month/state/models/journal_entry.model";
     </fieldset>
   </form>
   `,
-  styles: []
+	styles: []
 })
 export class PrevisionComponent implements OnInit {
-  @Input() public year: number;
-  @Input() public month: number;
-  @Output() public saveProjection = new EventEmitter<JournalEntry>();
-  public form: FormGroup;
-  constructor(private formbuilder: FormBuilder) {}
+	@Input() public year: number;
+	@Input() public month: number;
+	@Output()
+	public saveProjection = new EventEmitter<JournalEntry>();
+	public form: FormGroup;
+	constructor(private formbuilder: FormBuilder) {}
 
-  ngOnInit() {
-    this.form = this.formbuilder.group({
-      kind: [null, Validators.required],
-      date: [
-        new Date(this.year, this.month - 1, 1, 12, 0, 0)
-          .toISOString()
-          .substring(0, 10)
-      ],
-      description: "",
-      amount: [0, Validators.required]
-    });
-  }
+	ngOnInit() {
+		this.form = this.formbuilder.group({
+			kind: [null, Validators.required],
+			date: [this.getSafeDate()],
+			description: "",
+			amount: [0, Validators.required]
+		});
+	}
 
-  public submit(newProjection) {
-    newProjection.year = this.year;
-    newProjection.month = this.month;
-    newProjection.day = new Date(newProjection.date).getDay();
-    this.saveProjection.emit(newProjection);
-    this.form.reset({
-      amount: 0,
-      date: new Date(this.year, this.month - 1, 1, 12, 0, 0)
-        .toISOString()
-        .substring(0, 10)
-    });
-  }
+	public submit(newProjection) {
+		newProjection.year = this.year;
+		newProjection.month = this.month;
+		newProjection.day = this.getSafeDay(newProjection.date);
+		this.saveProjection.emit(newProjection);
+		this.form.reset({
+			amount: 0,
+			date: this.getSafeDate()
+		});
+	}
+
+	private getSafeDate = (): string =>
+		new Date(this.year, this.month - 1, 1, 12, 0, 0)
+			.toISOString()
+			.substring(0, 10);
+	private getSafeDay = (date: Date): number =>
+		new Date(date).getDay();
 }

@@ -7,6 +7,7 @@ import {
 	Validators
 } from "@angular/forms";
 import { GlobalStore } from "@tools/global/state/global-store.state";
+import { ValidatePassword } from "@tools/components/password-validator";
 
 @Component({
 	selector: "ab-login",
@@ -21,8 +22,14 @@ import { GlobalStore } from "@tools/global/state/global-store.state";
     <input name="password"
       formControlName="password"
       type="password"/>
-    <input class="button-primary" type="submit" [value]="pageData.title" [disabled]="form.invalid">
-    <a class="button button-clear" [routerLink]="['..',pageData.alternate | lowercase]">{{ pageData.alternate }}</a>
+    <input class="button-primary"
+      type="submit"
+      [value]="pageData.title"
+      [disabled]="form.invalid">
+    <a class="button button-clear"
+      [routerLink]="['..',pageData.alternate | lowercase]">
+      {{ pageData.alternate }}
+    </a>
   </form>
   `,
 	providers: [CredentialsService],
@@ -36,7 +43,7 @@ export class CredentialsComponent implements OnInit {
 		private credentialsService: CredentialsService,
 		private router: Router,
 		private store: GlobalStore,
-		private formbuilder: FormBuilder
+		private formBuilder: FormBuilder
 	) {}
 
 	public ngOnInit() {
@@ -44,14 +51,18 @@ export class CredentialsComponent implements OnInit {
 	}
 	private obtainPageDataFromRoute() {
 		this.pageData = this.activatedRoute.snapshot.data;
-		this.form = this.formbuilder.group({
+		this.form = this.formBuilder.group({
 			email: [
 				this.pageData.credential.email,
 				[Validators.required, Validators.email]
 			],
 			password: [
 				this.pageData.credential.password,
-				[Validators.required, Validators.minLength(4)]
+				[
+					Validators.required,
+					Validators.minLength(4),
+					ValidatePassword
+				]
 			]
 		});
 	}

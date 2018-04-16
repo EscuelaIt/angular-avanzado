@@ -1,18 +1,22 @@
 import {
-  Component,
-  OnInit,
-  Output,
-  EventEmitter,
-  ChangeDetectionStrategy,
-  Input
+	Component,
+	OnInit,
+	Output,
+	EventEmitter,
+	ChangeDetectionStrategy,
+	Input
 } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import {
+	FormGroup,
+	FormBuilder,
+	Validators
+} from "@angular/forms";
 import { expenseCategories } from "@routes/month/models/expenseCategories.model";
 import { JournalEntry } from "@routes/month/state/models/journal_entry.model";
 @Component({
-  selector: "ab-new-expense",
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+	selector: "ab-new-expense",
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	template: `
   <ab-widget-header mode="h3" caption="Record a new Expense"></ab-widget-header>
   <form [formGroup]="form" (submit)="submit(form.value)">
     <fieldset>
@@ -30,32 +34,37 @@ import { JournalEntry } from "@routes/month/state/models/journal_entry.model";
     </fieldset>
   </form>
   `,
-  styles: []
+	styles: []
 })
 export class NewExpenseComponent implements OnInit {
-  @Input() public year: number;
-  @Input() public month: number;
-  @Output() saveExpense = new EventEmitter<JournalEntry>();
-  public expenseCategories = expenseCategories;
-  public form: FormGroup;
-  constructor(private formbuilder: FormBuilder) {}
+	@Input() public year: number;
+	@Input() public month: number;
+	@Output() saveExpense = new EventEmitter<JournalEntry>();
+	public expenseCategories = expenseCategories;
+	public form: FormGroup;
+	constructor(private formbuilder: FormBuilder) {}
 
-  ngOnInit() {
-    this.form = this.formbuilder.group({
-      expenseCategory: [null, Validators.required],
-      date: new Date(this.year, this.month - 1, 1, 12, 0, 0)
-        .toISOString()
-        .substring(0, 10),
-      description: "",
-      amount: [0, Validators.required]
-    });
-  }
+	ngOnInit() {
+		this.form = this.formbuilder.group({
+			expenseCategory: [null, Validators.required],
+			date: this.getSafeDate(),
+			description: "",
+			amount: [0, Validators.required]
+		});
+	}
 
-  public submit(expense: any) {
-    expense.kind = "E";
-    expense.year = this.year;
-    expense.month = this.month;
-    expense.day = new Date(expense.date).getDay();
-    this.saveExpense.emit(expense);
-  }
+	public submit(expense: any) {
+		expense.kind = "E";
+		expense.year = this.year;
+		expense.month = this.month;
+		expense.day = this.getSafeDay(expense.date);
+		this.saveExpense.emit(expense);
+	}
+
+	private getSafeDate = (): string =>
+		new Date(this.year, this.month - 1, 1, 12, 0, 0)
+			.toISOString()
+			.substring(0, 10);
+	private getSafeDay = (date: Date): number =>
+		new Date(date).getDay();
 }
