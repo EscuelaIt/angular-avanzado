@@ -49,7 +49,7 @@ export class NewExpenseComponent implements OnInit {
 			expenseCategory: [null, Validators.required],
 			date: this.getSafeDate(),
 			description: "",
-			amount: [0, Validators.required]
+			amount: [0, [Validators.required, Validators.min(0)]]
 		});
 	}
 

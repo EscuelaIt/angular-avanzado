@@ -22,6 +22,7 @@ import { ValidatePassword } from "@tools/components/password-validator";
     <input name="password"
       formControlName="password"
       type="password"/>
+    <span *ngIf="form.get('password').invalid">password error</span>
     <input class="button-primary"
       type="submit"
       [value]="pageData.title"
@@ -64,7 +65,7 @@ export class CredentialsComponent implements OnInit {
 					ValidatePassword
 				]
 			]
-		});
+    });
 	}
 	public submit(credentials) {
 		this.store.dispatchUserMessage("Validating credentials...");
