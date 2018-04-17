@@ -8,6 +8,10 @@ import {
 } from "@angular/forms";
 import { GlobalStore } from "@tools/global/state/global-store.state";
 import { ValidatePassword } from "@tools/components/password-validator";
+import {
+	ShowUserMessage,
+	SetUserToken
+} from "@tools/global/state/global-store.actions";
 
 @Component({
 	selector: "ab-login",
@@ -65,10 +69,12 @@ export class CredentialsComponent implements OnInit {
 					ValidatePassword
 				]
 			]
-    });
+		});
 	}
 	public submit(credentials) {
-		this.store.dispatchUserMessage("Validating credentials...");
+		this.store.dispatch(
+			new ShowUserMessage("Validating credentials...")
+		);
 		const service = this.pageData.title;
 		this.credentialsService
 			.sendCredential(credentials, service)
@@ -78,12 +84,12 @@ export class CredentialsComponent implements OnInit {
 			);
 	}
 	private acceptedCredentials = responseData => {
-		this.store.dispatchUserToken(responseData.token);
-		this.store.dispatchUserMessage("Wellcome");
+		this.store.dispatch(new SetUserToken(responseData.token));
+		this.store.dispatch(new ShowUserMessage("Wellcome"));
 		this.router.navigateByUrl("/");
 	};
 	private invalidCredentials = () => {
-		this.store.dispatchUserToken("");
-		this.store.dispatchUserMessage("Invalid Credentials");
+		this.store.dispatch(new SetUserToken(""));
+		this.store.dispatch(new ShowUserMessage("Bad Credentials"));
 	};
 }

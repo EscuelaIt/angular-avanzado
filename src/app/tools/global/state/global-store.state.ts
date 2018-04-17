@@ -1,6 +1,8 @@
 import { Injectable } from "@angular/core";
 import { globalInitialState } from "@tools/global/state/models/global.model";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
+import { Action } from "@tools/global/state/global-store.actions";
+import { globalStoreReducer } from "@tools/global/state/global-store.reducer";
 
 @Injectable()
 export class GlobalStore {
@@ -14,15 +16,14 @@ export class GlobalStore {
 	public selectUserMessage$(): Observable<string> {
 		return this.userMessage$.asObservable();
 	}
-	public dispatchUserMessage(userMessage: string): void {
-		this.state.userMessage = userMessage;
-		this.userMessage$.next(this.state.userMessage);
-	}
+
 	public selectUserToken$(): Observable<string> {
 		return this.userToken$.asObservable();
 	}
-	public dispatchUserToken(userToken: string): void {
-		this.state.userToken = userToken;
+
+	public dispatch(action: Action) {
+		this.state = globalStoreReducer(this.state, action);
+		this.userMessage$.next(this.state.userMessage);
 		this.userToken$.next(this.state.userToken);
 	}
 }
