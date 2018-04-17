@@ -10,6 +10,7 @@ import { MonthBalance } from "@routes/month/state/models/month_balance.model";
 
 @Component({
 	selector: "ab-dashboard",
+	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `
   <ab-widget-header mode="h1" caption="Kakebo" value="Monthly balances" ></ab-widget-header>
   <a [routerLink]="['month', year , month]"> Create or view a balance controller for the current month </a>
