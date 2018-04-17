@@ -1,11 +1,16 @@
-import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
+import {
+	Component,
+	OnInit,
+	ChangeDetectionStrategy,
+	Input
+} from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "@environments/environment";
 import { MonthBalance } from "@routes/month/state/models/month_balance.model";
 
 @Component({
-  selector: "ab-dashboard",
-  template: `
+	selector: "ab-dashboard",
+	template: `
   <ab-widget-header mode="h1" caption="Kakebo" value="Monthly balances" ></ab-widget-header>
   <a [routerLink]="['month', year , month]"> Create or view a balance controller for the current month </a>
   <table>
@@ -22,7 +27,7 @@ import { MonthBalance } from "@routes/month/state/models/month_balance.model";
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let balance of balances$ | async" >
+      <tr *ngFor="let balance of balances" >
         <td><a [routerLink]="['month',balance.year,balance.month]"> {{ balance.year }} </a></td>
         <td><a [routerLink]="['month',balance.year,balance.month]"> {{ balance.month | monthName }}</a></td>
         <td>{{ balance.incomes }}</td>
@@ -35,17 +40,14 @@ import { MonthBalance } from "@routes/month/state/models/month_balance.model";
     </tbody>
   </table>
   `,
-  styles: []
+	styles: []
 })
 export class DashboardComponent implements OnInit {
-  public year = new Date().getFullYear();
-  public month = new Date().getMonth() + 1;
-  public balances$;
+	@Input() public balances: MonthBalance[];
+	public year = new Date().getFullYear();
+	public month = new Date().getMonth() + 1;
 
-  constructor(private http: HttpClient) {}
+	constructor(private http: HttpClient) {}
 
-  ngOnInit() {
-    const urlMonthBalances = environment.apiUrl + "priv/monthbalances/";
-    this.balances$ = this.http.get<MonthBalance[]>(urlMonthBalances);
-  }
+	ngOnInit() {}
 }
