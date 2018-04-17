@@ -7,7 +7,7 @@ import {
 
 import { SavingsGoal } from "@routes/month/models/savings_goal.model";
 import { JournalEntry } from "@routes/month/state/models/journal_entry.model";
-import { MonthStore } from "@routes/month/state/month-store.state";
+import { Month_OLD_Store } from "@routes/month/state/month-store.state";
 import { MonthBalance } from "@routes/month/state/models/month_balance.model";
 import { Subscription } from "rxjs";
 
@@ -49,7 +49,7 @@ export class PlanComponent implements OnInit, OnDestroy {
 	public projectedOutgoings: JournalEntry[];
 	public monthBalance: MonthBalance;
 
-	constructor(private store: MonthStore) {}
+	constructor(private store: Month_OLD_Store) {}
 
 	ngOnInit() {
 		this.monthBalanceSubscription = this.store.selectMonthBalance$.subscribe(

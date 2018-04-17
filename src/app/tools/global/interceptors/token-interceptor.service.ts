@@ -18,7 +18,7 @@ export class TokenInterceptorService
 	}
 
 	private subscribeToTokenChanges() {
-		this.store.selectUserToken$().subscribe(this.setToken);
+		this.store.selectUserToken$.subscribe(this.setToken);
 	}
 
 	private setToken = (token: string) => (this.token = token);

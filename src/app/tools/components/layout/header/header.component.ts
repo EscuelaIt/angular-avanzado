@@ -20,13 +20,11 @@ export class HeaderComponent implements OnInit {
 	constructor(private store: GlobalStore) {}
 
 	ngOnInit() {
-		this.store
-			.selectUserToken$()
-			.subscribe(
-				(res: string) => (this.isAnonymous = res === "")
-			);
-		this.store
-			.selectUserMessage$()
-			.subscribe((res: string) => (this.message = res));
+		this.store.selectUserToken$.subscribe(
+			(res: string) => (this.isAnonymous = res === "")
+		);
+		this.store.selectUserMessage$.subscribe(
+			(res: string) => (this.message = res)
+		);
 	}
 }

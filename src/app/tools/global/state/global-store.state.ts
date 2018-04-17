@@ -14,10 +14,8 @@ export class GlobalStore {
 	private userMessage$ = new Subject<string>();
 	private userToken$ = new Subject<string>();
 
-	public selectUserMessage$ = (): Observable<string> =>
-		this.userMessage$.asObservable();
-	public selectUserToken$ = (): Observable<string> =>
-		this.userToken$.asObservable();
+	public selectUserMessage$ = this.userMessage$.asObservable();
+	public selectUserToken$ = this.userToken$.asObservable();
 
 	constructor() {}
 

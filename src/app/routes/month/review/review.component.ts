@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { MonthBalance } from "@routes/month/state/models/month_balance.model";
-import { MonthStore } from "@routes/month/state/month-store.state";
 import { Subscription } from "rxjs";
+import { MonthStore } from "@routes/month/state/month.state";
 
 @Component({
-  selector: "ab-review",
-  template: `
+	selector: "ab-review",
+	template: `
   <ab-widget-header mode="h2" caption="Review what you do with your incomes of" value="{{monthBalance.incomes}} €"></ab-widget-header>
   <main>
     <dd>
@@ -33,21 +33,21 @@ import { Subscription } from "rxjs";
     </dl>
   </main>
   `,
-  styles: []
+	styles: []
 })
 export class ReviewComponent implements OnInit, OnDestroy {
-  public monthBalanceSubscription: Subscription;
-  public monthBalance: MonthBalance;
+	public monthBalanceSubscription: Subscription;
+	public monthBalance: MonthBalance;
 
-  constructor(private store: MonthStore) {}
+	constructor(private store: MonthStore) {}
 
-  ngOnInit() {
-    this.monthBalanceSubscription = this.store.selectMonthBalance$.subscribe(
-      res => (this.monthBalance = res)
-    );
-  }
+	ngOnInit() {
+		this.monthBalanceSubscription = this.store.selectMonthBalance$.subscribe(
+			res => (this.monthBalance = res)
+		);
+	}
 
-  ngOnDestroy(): void {
-    this.monthBalanceSubscription.unsubscribe();
-  }
+	ngOnDestroy(): void {
+		this.monthBalanceSubscription.unsubscribe();
+	}
 }
