@@ -22,7 +22,7 @@ export class GlobalStore {
 
 	constructor() {}
 
-	public dispatch(action: Action) {
+	public dispatch(action: Action): void {
 		this.state = globalStoreReducer(this.state, action);
 		if (action.type === GlobalActions.ShowUserMessage) {
 			this.userMessage$.next(this.state.userMessage);
