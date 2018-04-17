@@ -1,11 +1,11 @@
 import {
-	JournalAction,
-	JournalActions
-} from "@routes/month/state/journal-store.actions";
-import {
 	JournalEntry,
 	journalEntriesInitialState
 } from "@routes/month/state/models/journal_entry.model";
+import {
+	JournalAction,
+	JournalActions
+} from "@routes/month/state/journal-store/journal-store.actions";
 
 export function journalStoreReducer(
 	state = journalEntriesInitialState,
@@ -17,7 +17,7 @@ export function journalStoreReducer(
 		case JournalActions.PostJournalEntry:
 			return [...state, action.payload];
 		case JournalActions.DeleteJournalEntry:
-			return state.filter(je => je._id === action.payload._id);
+			return state.filter(je => je._id !== action.payload._id);
 		default:
 			return state;
 	}

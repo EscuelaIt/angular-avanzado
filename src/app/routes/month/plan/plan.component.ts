@@ -7,9 +7,15 @@ import {
 
 import { SavingsGoal } from "@routes/month/models/savings_goal.model";
 import { JournalEntry } from "@routes/month/state/models/journal_entry.model";
-import { Month_OLD_Store } from "@routes/month/state/month-store.state";
 import { MonthBalance } from "@routes/month/state/models/month_balance.model";
 import { Subscription } from "rxjs";
+import { MonthStore } from "@routes/month/state/month.state";
+import { JournalApi } from "@routes/month/state/journal-store/journal-api.service";
+import {
+	PostJournalEntry,
+	DeleteJournalEntry
+} from "@routes/month/state/journal-store/journal-store.actions";
+import { SetGoal } from "@routes/month/state/month-store/month-store.actions";
 
 @Component({
 	selector: "ab-plan",
@@ -49,28 +55,43 @@ export class PlanComponent implements OnInit, OnDestroy {
 	public projectedOutgoings: JournalEntry[];
 	public monthBalance: MonthBalance;
 
-	constructor(private store: Month_OLD_Store) {}
+	constructor(
+		private store: MonthStore,
+		private journalApi: JournalApi
+	) {}
 
 	ngOnInit() {
 		this.monthBalanceSubscription = this.store.selectMonthBalance$.subscribe(
 			res => (this.monthBalance = res)
 		);
-		this.projectedIncomesSubscription = this.store.selectProjectedIncomes$.subscribe(
+		this.projectedIncomesSubscription = this.store.selectIncomes$.subscribe(
 			res => (this.projectedIncomes = res)
 		);
-		this.projectedOutgoingsSubscription = this.store.selectProjectedOutgoings$.subscribe(
+		this.projectedOutgoingsSubscription = this.store.selectOutgoings$.subscribe(
 			res => (this.projectedOutgoings = res)
 		);
 	}
 
 	public saveNewEntry(projectedEntry: JournalEntry) {
-		this.store.dispatchPostJournalEntry(projectedEntry);
+		this.journalApi
+			.postJournalEntry$(projectedEntry)
+			.subscribe(res =>
+				this.store.dispatchJournal(new PostJournalEntry(res))
+			);
 	}
 	public deleteAnEntry(projectedEntry: JournalEntry) {
-		this.store.dispatchDeleteJournalEntry(projectedEntry);
+		this.journalApi
+			.deleteJournalEntry$(projectedEntry)
+			.subscribe(res =>
+				this.store.dispatchJournal(
+					new DeleteJournalEntry(projectedEntry)
+				)
+			);
 	}
 	public setGoalForMonth(savingsGoal: SavingsGoal) {
-		this.store.dispatchSetGoalMonth(savingsGoal.goalToSave);
+		this.store.dispatchMonth(
+			new SetGoal(savingsGoal.goalToSave)
+		);
 	}
 
 	ngOnDestroy(): void {

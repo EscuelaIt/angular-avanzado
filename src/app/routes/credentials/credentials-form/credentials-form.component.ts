@@ -19,7 +19,7 @@ import { ValidatePassword } from "@tools/components/password-validator";
 	selector: "ab-credentials-form",
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `
-  <form *ngIf="form !== undefined" [formGroup]="form" (submit)="submit.next(form.value)">
+  <form *ngIf="form !== undefined" [formGroup]="form" (submit)="submitClick()">
     <label for="email">Email</label>
     <input name="email"
       formControlName="email"
@@ -43,7 +43,7 @@ import { ValidatePassword } from "@tools/components/password-validator";
 export class CredentialsFormComponent
 	implements OnInit, OnChanges {
 	@Input() public pageData: any;
-	@Output() public submit = new EventEmitter<any>();
+	@Output() public submitCredentials = new EventEmitter<any>();
 	public form: FormGroup;
 	constructor(private formBuilder: FormBuilder) {}
 
@@ -64,5 +64,9 @@ export class CredentialsFormComponent
 				]
 			]
 		});
+	}
+
+	public submitClick() {
+		this.submitCredentials.next(this.form.value);
 	}
 }

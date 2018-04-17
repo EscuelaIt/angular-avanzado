@@ -4,7 +4,10 @@ import {
 	Global
 } from "@tools/global/state/models/global.model";
 import { Observable, Subject } from "rxjs";
-import { Action } from "@tools/global/state/global-store.actions";
+import {
+	Action,
+	GlobalActions
+} from "@tools/global/state/global-store.actions";
 import { globalStoreReducer } from "@tools/global/state/global-store.reducer";
 
 @Injectable()
@@ -21,7 +24,10 @@ export class GlobalStore {
 
 	public dispatch(action: Action) {
 		this.state = globalStoreReducer(this.state, action);
-		this.userMessage$.next(this.state.userMessage);
-		this.userToken$.next(this.state.userToken);
+		if (action.type === GlobalActions.ShowUserMessage) {
+			this.userMessage$.next(this.state.userMessage);
+		} else {
+			this.userToken$.next(this.state.userToken);
+		}
 	}
 }

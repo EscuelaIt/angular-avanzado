@@ -11,7 +11,7 @@ import {
 	selector: "ab-login",
 	template: `
   <ab-widget-header mode="h1" caption="{{pageData.title}}" value="Wellcome"></ab-widget-header>
-  <ab-credentials-form [pageData]="pageData" (submit)="submit($event)" ><ab-credentials-form>
+  <ab-credentials-form [pageData]="pageData" (submitCredentials)="submitCredentials($event)" ><ab-credentials-form>
   `,
 	providers: [CredentialsService],
 	styles: []
@@ -31,7 +31,7 @@ export class CredentialsComponent implements OnInit {
 	private obtainPageDataFromRoute() {
 		this.pageData = this.activatedRoute.snapshot.data;
 	}
-	public submit(credentials) {
+	public submitCredentials(credentials) {
 		this.store.dispatch(
 			new ShowUserMessage("Validating credentials...")
 		);
@@ -48,7 +48,7 @@ export class CredentialsComponent implements OnInit {
 		this.store.dispatch(new ShowUserMessage("Wellcome"));
 		this.router.navigateByUrl("/");
 	};
-	private invalidCredentials = () => {
+	private invalidCredentials = err => {
 		this.store.dispatch(new SetUserToken(""));
 		this.store.dispatch(new ShowUserMessage("Bad Credentials"));
 	};

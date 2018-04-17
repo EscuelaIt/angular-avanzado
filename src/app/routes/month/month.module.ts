@@ -6,8 +6,8 @@ import { MonthComponent } from "./month.component";
 import { ComponentsModule } from "@tools/components/components.module";
 
 import { MonthStore } from "@routes/month/state/month.state";
-import { MonthBalanceApi } from "@routes/month/state/month-balance-api.service";
-import { JournalEntryApi } from "@routes/month/state/journal-entry-api.service";
+import { MonthApi } from "@routes/month/state/month-store/month-api.service";
+import { JournalApi } from "@routes/month/state/journal-store/journal-api.service";
 
 @NgModule({
 	imports: [
@@ -16,6 +16,6 @@ import { JournalEntryApi } from "@routes/month/state/journal-entry-api.service";
 		ComponentsModule
 	],
 	declarations: [MonthComponent],
-	providers: [MonthBalanceApi, JournalEntryApi, MonthStore]
+	providers: [MonthApi, JournalApi, MonthStore]
 })
 export class MonthModule {}

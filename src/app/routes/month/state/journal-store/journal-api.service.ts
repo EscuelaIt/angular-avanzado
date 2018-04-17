@@ -6,7 +6,7 @@ import { YearMonth } from "@routes/month/state/models/month_balance.model";
 import { JournalEntry } from "@routes/month/state/models/journal_entry.model";
 
 @Injectable()
-export class JournalEntryApi {
+export class JournalApi {
 	private url = environment.apiUrl + "priv/journalentries/";
 
 	constructor(private http: HttpClient) {}

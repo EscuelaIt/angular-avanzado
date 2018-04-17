@@ -2,16 +2,19 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { NavLink } from "@tools/models/nav-link.model";
 import { map } from "rxjs/operators";
-import { MonthBalance } from "@routes/month/state/models/month_balance.model";
+import {
+	MonthBalance,
+	monthBalanceInitialState
+} from "@routes/month/state/models/month_balance.model";
 import { Observable } from "rxjs";
 import { MonthStore } from "@routes/month/state/month.state";
+import { MonthApi } from "@routes/month/state/month-store/month-api.service";
+import { JournalApi } from "@routes/month/state/journal-store/journal-api.service";
 import {
-	SetYearMonth,
-	GetMonthBalance
-} from "@routes/month/state/month-store.actions";
-import { MonthBalanceApi } from "@routes/month/state/month-balance-api.service";
-import { JournalEntryApi } from "@routes/month/state/journal-entry-api.service";
-import { GetJournalEntries } from "@routes/month/state/journal-store.actions";
+	GetMonthBalance,
+	PostMonthBalance
+} from "@routes/month/state/month-store/month-store.actions";
+import { GetJournalEntries } from "@routes/month/state/journal-store/journal-store.actions";
 
 @Component({
 	selector: "ab-month",
@@ -21,10 +24,10 @@ import { GetJournalEntries } from "@routes/month/state/journal-store.actions";
     <section class="row">
       <aside class="column column-20">
         <ab-nav [navLinks]="navLinks"></ab-nav>
-      </aside>  
+      </aside>
       <main class="column float-left">
         <router-outlet></router-outlet>
-      </main>    
+      </main>
     </section>
   </section>
   <ng-template #noMonthBalance>
@@ -55,8 +58,8 @@ export class MonthComponent implements OnInit {
 	constructor(
 		private activatedRoute: ActivatedRoute,
 		private monthStore: MonthStore,
-		private monthBalanceApi: MonthBalanceApi,
-		private journalEntryApi: JournalEntryApi
+		private monthApi: MonthApi,
+		private journalApi: JournalApi
 	) {}
 
 	ngOnInit() {
@@ -68,17 +71,27 @@ export class MonthComponent implements OnInit {
 		this.savings$ = this.monthBalance$.pipe(
 			map(m => m.savings)
 		);
-		this.monthStore.dispatchMonth(
-			new SetYearMonth({ year: this.year, month: this.month })
-		);
-		this.monthBalanceApi
+		this.monthApi
 			.getMonthBalancesByYearMonth$(yearMonth)
-			.subscribe(res =>
-				this.monthStore.dispatchMonth(
-					new GetMonthBalance(res[0])
-				)
+			.subscribe(
+				res =>
+					this.monthStore.dispatchMonth(
+						new GetMonthBalance(res[0])
+					),
+				err =>
+					this.monthApi
+						.postMonthBalance$({
+							...monthBalanceInitialState,
+							year: this.year,
+							month: this.month
+						})
+						.subscribe(res =>
+							this.monthStore.dispatchMonth(
+								new PostMonthBalance(res)
+							)
+						)
 			);
-		this.journalEntryApi
+		this.journalApi
 			.getJournalEntriesByYearMonth$(yearMonth)
 			.subscribe(res =>
 				this.monthStore.dispatchJournal(

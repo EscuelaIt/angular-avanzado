@@ -1,12 +1,12 @@
 import {
-	MonthAction,
-	MonthActions
-} from "@routes/month/state/month-store.actions";
-import {
 	MonthBalance,
 	monthBalanceInitialState
 } from "@routes/month/state/models/month_balance.model";
 import { JournalEntry } from "@routes/month/state/models/journal_entry.model";
+import {
+	MonthAction,
+	MonthActions
+} from "@routes/month/state/month-store/month-store.actions";
 
 export function monthStoreReducer(
 	state = monthBalanceInitialState,
@@ -20,11 +20,11 @@ export function monthStoreReducer(
 				month: action.payload.month
 			};
 		case MonthActions.SetGoal:
-			let setGoal = { ...state, goal: action.payload };
+			const setGoal = { ...state, goal: action.payload };
 			setGoal.available = setGoal.savings - setGoal.goal;
 			return setGoal;
 		case MonthActions.CalculateBalance:
-			let calculateBalance = { ...state };
+			const calculateBalance = { ...state };
 			calculateBalance.incomes = sumAmount(
 				filterJournalsByKind(action.payload, "I")
 			);

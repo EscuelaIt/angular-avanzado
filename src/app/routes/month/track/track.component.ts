@@ -1,13 +1,13 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { JournalEntry } from "@routes/month/state/models/journal_entry.model";
 import { MonthBalance } from "@routes/month/state/models/month_balance.model";
 import { Subscription } from "rxjs";
 import { MonthStore } from "@routes/month/state/month.state";
+import { JournalApi } from "@routes/month/state/journal-store/journal-api.service";
 import {
 	PostJournalEntry,
 	DeleteJournalEntry
-} from "@routes/month/state/journal-store.actions";
-import { JournalEntryApi } from "@routes/month/state/journal-entry-api.service";
+} from "@routes/month/state/journal-store/journal-store.actions";
 
 @Component({
 	selector: "ab-track",
@@ -24,14 +24,14 @@ import { JournalEntryApi } from "@routes/month/state/journal-entry-api.service";
   `,
 	styles: []
 })
-export class TrackComponent implements OnInit {
+export class TrackComponent implements OnInit, OnDestroy {
 	public monthBalanceSubscription: Subscription;
 	public expensesSubscription: Subscription;
 	public expenses: JournalEntry[] = [];
 	public monthBalance: MonthBalance;
 	constructor(
 		private store: MonthStore,
-		private journalEntryApi: JournalEntryApi
+		private journalApi: JournalApi
 	) {}
 
 	ngOnInit() {
@@ -43,14 +43,14 @@ export class TrackComponent implements OnInit {
 		);
 	}
 	public saveNewExpense(expense: JournalEntry) {
-		this.journalEntryApi
+		this.journalApi
 			.postJournalEntry$(expense)
 			.subscribe(res => {
 				this.store.dispatchJournal(new PostJournalEntry(res));
 			});
 	}
 	public deleteExpense(expense: JournalEntry) {
-		this.journalEntryApi
+		this.journalApi
 			.deleteJournalEntry$(expense)
 			.subscribe(res =>
 				this.store.dispatchJournal(

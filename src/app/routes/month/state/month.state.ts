@@ -6,18 +6,19 @@ import {
 import { BehaviorSubject } from "rxjs";
 import { JournalEntry } from "@routes/month/state/models/journal_entry.model";
 import { MonthBalance } from "@routes/month/state/models/month_balance.model";
+import { MonthApi } from "@routes/month/state/month-store/month-api.service";
 import {
 	MonthAction,
-	CalculateBalance,
-	PostMonthBalance
-} from "@routes/month/state/month-store.actions";
+	MonthActions,
+	PutMonthBalance,
+	CalculateBalance
+} from "@routes/month/state/month-store/month-store.actions";
 import {
 	monthStoreReducer,
 	filterJournalsByKind
-} from "@routes/month/state/month-store.reducer";
-import { JournalAction } from "@routes/month/state/journal-store.actions";
-import { journalStoreReducer } from "@routes/month/state/journal-store.reducer";
-import { MonthBalanceApi } from "@routes/month/state/month-balance-api.service";
+} from "@routes/month/state/month-store/month-store.reducer";
+import { JournalAction } from "@routes/month/state/journal-store/journal-store.actions";
+import { journalStoreReducer } from "@routes/month/state/journal-store/journal-store.reducer";
 
 @Injectable()
 export class MonthStore {
@@ -26,22 +27,19 @@ export class MonthStore {
 	private monthBalance$ = new BehaviorSubject<MonthBalance>(
 		null
 	);
-	private projectedIncomes$ = new BehaviorSubject<
-		JournalEntry[]
-	>([]);
-	private projectedOutgoings$ = new BehaviorSubject<
-		JournalEntry[]
-	>([]);
+	private incomes$ = new BehaviorSubject<JournalEntry[]>([]);
+	private outgoings$ = new BehaviorSubject<JournalEntry[]>([]);
 	private expenses$ = new BehaviorSubject<JournalEntry[]>([]);
 
 	public selectMonthBalance$ = this.monthBalance$.asObservable();
-	public selectProjectedIncomes$ = this.projectedIncomes$.asObservable();
-	public selectProjectedOutgoings$ = this.projectedOutgoings$.asObservable();
+	public selectIncomes$ = this.incomes$.asObservable();
+	public selectOutgoings$ = this.outgoings$.asObservable();
 	public selectExpenses$ = this.expenses$.asObservable();
 
-	constructor(private monthBalanceApi: MonthBalanceApi) {}
+	constructor(private monthBalanceApi: MonthApi) {}
 
 	public dispatchMonth(action: MonthAction) {
+		console.log(action.type, action.payload);
 		this.state = {
 			...this.state,
 			monthBalance: monthStoreReducer(
@@ -50,8 +48,16 @@ export class MonthStore {
 			)
 		};
 		this.monthBalance$.next(this.state.monthBalance);
+		if (action.payload === MonthActions.SetGoal) {
+			this.monthBalanceApi
+				.putMonthBalance$(this.state.monthBalance)
+				.subscribe(res =>
+					this.dispatchMonth(new PutMonthBalance(res))
+				);
+		}
 	}
 	public dispatchJournal(action: JournalAction) {
+		console.log(action.type, action.payload);
 		this.state = {
 			...this.state,
 			journalEntries: journalStoreReducer(
@@ -59,10 +65,10 @@ export class MonthStore {
 				action
 			)
 		};
-		this.projectedIncomes$.next(
+		this.incomes$.next(
 			filterJournalsByKind(this.state.journalEntries, "I")
 		);
-		this.projectedOutgoings$.next(
+		this.outgoings$.next(
 			filterJournalsByKind(this.state.journalEntries, "O")
 		);
 		this.expenses$.next(
@@ -72,9 +78,9 @@ export class MonthStore {
 			new CalculateBalance(this.state.journalEntries)
 		);
 		this.monthBalanceApi
-			.postMonthBalance$(this.state.monthBalance)
+			.putMonthBalance$(this.state.monthBalance)
 			.subscribe(res =>
-				this.dispatchMonth(new PostMonthBalance(res))
+				this.dispatchMonth(new PutMonthBalance(res))
 			);
 	}
 }

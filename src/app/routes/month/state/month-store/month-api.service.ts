@@ -8,7 +8,7 @@ import {
 } from "@routes/month/state/models/month_balance.model";
 
 @Injectable()
-export class MonthBalanceApi {
+export class MonthApi {
 	private url = environment.apiUrl + "priv/monthbalances/";
 
 	constructor(private http: HttpClient) {}
