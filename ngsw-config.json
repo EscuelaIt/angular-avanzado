@@ -34,12 +34,12 @@
       "cacheConfig": {
         "strategy": "freshness",
         "maxSize": 100,
-        "maxAge": "1h",
+        "maxAge": "10m",
         "timeout": "5s"
       }
     },
     {
-      "name": "operations-api",
+      "name": "categories-api",
       "urls": [
         "https://api-base.herokuapp.com/api/pub/categories/months",
         "https://api-base.herokuapp.com/api/pub/categories/entry_kinds",
