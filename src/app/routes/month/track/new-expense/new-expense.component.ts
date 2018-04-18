@@ -11,8 +11,9 @@ import {
 	FormBuilder,
 	Validators
 } from "@angular/forms";
-import { expenseCategories } from "@routes/month/models/expenseCategories.model";
 import { JournalEntry } from "@routes/month/state/models/journal_entry.model";
+import { environment } from "@environments/environment";
+import { HttpClient } from "@angular/common/http";
 @Component({
 	selector: "ab-new-expense",
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -40,11 +41,19 @@ export class NewExpenseComponent implements OnInit {
 	@Input() public year: number;
 	@Input() public month: number;
 	@Output() saveExpense = new EventEmitter<JournalEntry>();
-	public expenseCategories = expenseCategories;
+	public expenseCategories = [];
 	public form: FormGroup;
-	constructor(private formbuilder: FormBuilder) {}
+	constructor(
+		private formbuilder: FormBuilder,
+		private http: HttpClient
+	) {}
 
 	ngOnInit() {
+		const urlExpenseCategories =
+			environment.apiUrl + "pub/categories/expense_categories";
+		this.http
+			.get<string[]>(urlExpenseCategories)
+			.subscribe(res => (this.expenseCategories = res));
 		this.form = this.formbuilder.group({
 			expenseCategory: [null, Validators.required],
 			date: this.getSafeDate(),
