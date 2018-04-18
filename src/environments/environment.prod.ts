@@ -1,4 +1,4 @@
 export const environment = {
-  production: true,
-  apiUrl: "http://api-base.escuelabinaria.com/api/"
+	production: true,
+	apiUrl: "https://api-base.herokuapp.com/api/"
 };
