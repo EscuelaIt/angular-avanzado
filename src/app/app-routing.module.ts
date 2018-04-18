@@ -4,7 +4,7 @@ import { RouterModule, Routes } from "@angular/router";
 const routes: Routes = [
 	{
 		path: "",
-		loadChildren: "@routes/home/home.module#HomeModule"
+		loadChildren: "@home/home.module#HomeModule"
 	},
 	{
 		path: "about",

@@ -19,6 +19,7 @@
     "paths": {
       "@tools/*": ["./app/tools/*"],
       "@routes/*": ["./app/routes/*"],
+      "@home/*": ["./app/routes/home/*"],
       "@environments/*": ["./environments/*"]
     }
   }
