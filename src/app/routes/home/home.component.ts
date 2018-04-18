@@ -18,10 +18,7 @@ export class HomeComponent implements OnInit {
 	constructor(private http: HttpClient) {}
 
 	ngOnInit() {
-		const urlMonthBalances =
-			environment.apiUrl + "priv/monthbalances/";
-		this.balances$ = this.http.get<MonthBalance[]>(
-			urlMonthBalances
-		);
+		const url = environment.apiUrl + "priv/monthbalances/";
+		this.balances$ = this.http.get<MonthBalance[]>(url);
 	}
 }

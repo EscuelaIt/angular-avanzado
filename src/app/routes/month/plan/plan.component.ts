@@ -5,7 +5,6 @@ import {
 	OnDestroy
 } from "@angular/core";
 
-import { SavingsGoal } from "@routes/month/models/savings_goal.model";
 import { JournalEntry } from "@routes/month/state/models/journal_entry.model";
 import { MonthBalance } from "@routes/month/state/models/month_balance.model";
 import { Subscription } from "rxjs";
@@ -16,6 +15,7 @@ import {
 	DeleteJournalEntry
 } from "@routes/month/state/journal-store/journal-store.actions";
 import { SetGoal } from "@routes/month/state/month-store/month-store.actions";
+import { SavingsGoal } from "@routes/month/state/models/savings_goal.model";
 
 @Component({
 	selector: "ab-plan",

@@ -13,8 +13,8 @@ import {
 	FormBuilder,
 	Validators
 } from "@angular/forms";
-import { SavingsGoal } from "@routes/month/models/savings_goal.model";
 import { MonthBalance } from "@routes/month/state/models/month_balance.model";
+import { SavingsGoal } from "@routes/month/state/models/savings_goal.model";
 
 @Component({
 	selector: "ab-goal",

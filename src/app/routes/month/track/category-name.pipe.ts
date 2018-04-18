@@ -1,12 +1,11 @@
 import { Pipe, PipeTransform } from "@angular/core";
-import { expenseCategories } from "@routes/month/models/expenseCategories.model";
+import { expenseCategories } from "@routes/month/state/models/expenseCategories.model";
 
 @Pipe({
-  name: "categoryName"
+	name: "categoryName"
 })
 export class CategoryNamePipe implements PipeTransform {
-  public expenseCategories = expenseCategories;
-  transform(category: string, args?: any): string {
-    return expenseCategories[category];
-  }
+	transform(category: string, args?: any): string {
+		return expenseCategories[category];
+	}
 }

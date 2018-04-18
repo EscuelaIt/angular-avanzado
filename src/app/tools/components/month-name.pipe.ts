@@ -8,10 +8,9 @@ import { environment } from "@environments/environment";
 export class MonthNamePipe implements PipeTransform {
 	private months = [];
 	constructor(private http: HttpClient) {
-		const urlExpenseCategories =
-			environment.apiUrl + "pub/categories/months";
+		const url = environment.apiUrl + "pub/categories/months";
 		this.http
-			.get<string[]>(urlExpenseCategories)
+			.get<string[]>(url)
 			.subscribe(res => (this.months = res));
 	}
 

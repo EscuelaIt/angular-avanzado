@@ -8,17 +8,29 @@ import {
 	PostJournalEntry,
 	DeleteJournalEntry
 } from "@routes/month/state/journal-store/journal-store.actions";
+import { HttpClient } from "@angular/common/http";
+import { environment } from "@environments/environment";
 
 @Component({
 	selector: "ab-track",
 	template: `
-    <ab-widget-header mode="h2" caption="Track your expenses. Left to expend" value="{{monthBalance.available}} €"></ab-widget-header>
+    <ab-widget-header mode="h2"
+      caption="Track your expenses. Left to expend"
+      value="{{monthBalance.available}} €">
+    </ab-widget-header>
     <main class="column">
       <section>
-        <ab-new-expense [year]="monthBalance.year" [month]="monthBalance.month" (saveExpense)="saveNewExpense($event)"></ab-new-expense>
+        <ab-new-expense
+          [year]="monthBalance.year" [month]="monthBalance.month"
+          [expenseCategories]="expenseCategories"
+          (saveExpense)="saveNewExpense($event)">
+        </ab-new-expense>
       </section>
       <section>
-        <ab-expenses-list [expensesToList]="expenses" (deleteExpense)="deleteExpense($event)"></ab-expenses-list>
+        <ab-expenses-list
+          [expensesToList]="expenses"
+          (deleteExpense)="deleteExpense($event)">
+        </ab-expenses-list>
       </section>
     <main>
   `,
@@ -29,12 +41,19 @@ export class TrackComponent implements OnInit, OnDestroy {
 	public expensesSubscription: Subscription;
 	public expenses: JournalEntry[] = [];
 	public monthBalance: MonthBalance;
+	public expenseCategories = {};
 	constructor(
 		private store: MonthStore,
-		private journalApi: JournalApi
+		private journalApi: JournalApi,
+		private http: HttpClient
 	) {}
 
 	ngOnInit() {
+		const url =
+			environment.apiUrl + "pub/categories/expense_categories";
+		this.http.get<any>(url).subscribe(res => {
+			this.expenseCategories = res;
+		});
 		this.monthBalanceSubscription = this.store.selectMonthBalance$.subscribe(
 			res => (this.monthBalance = res)
 		);
