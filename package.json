@@ -3,6 +3,7 @@
   "version": "6.7.0",
   "description": "Base for an advanced project with Angular",
   "homepage": "http://academia-binaria.com/categories/Tutorial/Angular/",
+  "publisher": "https://angular-avanzado.herokuapp.com/",
   "author": {
     "name": "Alberto Basalo",
     "email": "albertobasalo@agorabinaria.com",
