@@ -15,7 +15,8 @@
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",    
+    "postinstall": "npm run build"
   },
   "private": true,
   "dependencies": {
@@ -28,10 +29,11 @@
     "@angular/platform-browser": "^6.0.0-rc.5",
     "@angular/platform-browser-dynamic": "^6.0.0-rc.5",
     "@angular/router": "^6.0.0-rc.5",
+    "@angular/service-worker": "^6.0.0-rc.5",
     "core-js": "^2.5.4",
+    "express": "^4.16.3",
     "rxjs": "^6.0.0-uncanny-rc.7",
-    "zone.js": "^0.8.24",
-    "@angular/service-worker": "^6.0.0-rc.5"
+    "zone.js": "^0.8.24"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.5.0",
