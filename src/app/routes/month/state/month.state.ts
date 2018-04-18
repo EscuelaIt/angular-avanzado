@@ -48,7 +48,7 @@ export class MonthStore {
 			)
 		};
 		this.monthBalance$.next(this.state.monthBalance);
-		if (action.payload === MonthActions.SetGoal) {
+		if (action.type === MonthActions.SetGoal) {
 			this.monthBalanceApi
 				.putMonthBalance$(this.state.monthBalance)
 				.subscribe(res =>

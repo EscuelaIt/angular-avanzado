@@ -22,7 +22,11 @@ import { SetGoal } from "@routes/month/state/month-store/month-store.actions";
 	template: `
     <ab-widget-header mode="h2" caption="Plan your goal to save" value="{{monthBalance.goal}} €"></ab-widget-header>
     <main class="column">
-      <ab-goal *ngIf="monthBalance.incomes>0" [monthBalance]="monthBalance" (setGoal)="setGoalForMonth($event)"></ab-goal>
+      <ab-goal
+        *ngIf="monthBalance.incomes>0"
+        [monthBalance]="monthBalance"
+        (setGoal)="setGoalForMonth($event)">
+      </ab-goal>
       <section class="row">
         <section class="column column-40">
           <ab-prevision class="container"
