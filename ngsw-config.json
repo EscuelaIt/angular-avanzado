@@ -23,5 +23,20 @@
         "/assets/**"
       ]
     }
-  }]
+  }],
+  "dataGroups": [
+    {
+      "name": "operations-api",
+      "urls": [
+        "https://api-base.herokuapp.com/api/priv/monthbalances",
+        "https://api-base.herokuapp.com/api/priv/journalentries"
+      ],
+      "cacheConfig": {
+        "strategy": "freshness",
+        "maxSize": 20,
+        "maxAge": "1h",
+        "timeout": "5s"
+      }
+    }
+  ]
 }

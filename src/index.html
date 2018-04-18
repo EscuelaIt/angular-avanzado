@@ -1,17 +1,62 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
-  <title>AngularAvanzado</title>
+  <title>Angular Avanzado</title>
   <base href="/">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="manifest" href="./manifest.json">
-  <meta name="Description" content="Angular Application">
-  <meta name="theme-color" content="#FFFFFF">
+  <meta name="Description" content="Sample app made with Angular">
+  <meta name="theme-color" content="#9b4dca">
+  <style>
+    .loader {
+      display: flex;
+      height: 50vh;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .spinner {
+      height: 10vh;
+      width: 10vh;
+      border: 5px solid #9b4dca;
+      border-top-color: #bbca4d;
+      border-radius: 100%;
+      animation: rotation 0.6s infinite linear 0.25s;
+      opacity: 0;
+    }
+
+    @keyframes rotation {
+      from {
+        opacity: 1;
+        transform: rotate(0deg);
+      }
+      to {
+        opacity: 1;
+        transform: rotate(359deg);
+      }
+    }
+  </style>
 </head>
+
 <body>
-  <ab-root></ab-root>
+  <noscript>
+    <h3>Sorry, but app is not available without javascript</h3>
+  </noscript>
+  <ab-root>
+    <div style="align-items: center;">
+      <h1>Kakebo</h1>
+      <h2>Advanced Angular Application</h2>
+      <h3>loading....</h3>
+      <h4>please wait....</h4>
+    </div>
+    <div class="loader">
+      <div class="spinner"></div>
+    </div>
+  </ab-root>
 </body>
+
 </html>
