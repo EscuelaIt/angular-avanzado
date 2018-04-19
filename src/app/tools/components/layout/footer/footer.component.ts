@@ -9,7 +9,7 @@ import { Component, OnInit, Input } from "@angular/core";
         <div class="float-left">
           <em>The japanese art of saving money.</em> 
         </div> 
-        <div class="float-right"> - Coded by <a href="https://twitter.com/albertobasalo">Alberto Basalo</a><small>v.: {{version}}</small></div>
+        <div class="float-right"> - Coded by <a href="https://twitter.com/albertobasalo">Alberto Basalo</a><i> - v.: {{version}}</i></div>
       </div>
     </blockquote>
   </footer>
