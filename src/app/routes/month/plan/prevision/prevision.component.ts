@@ -17,21 +17,51 @@ import { JournalEntry } from "@routes/month/state/models/journal_entry.model";
 	selector: "ab-prevision",
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `
-  <ab-widget-header mode="h3" caption="Set your Previsions" value=""></ab-widget-header>
-  <form [formGroup]="form" (submit)="submit(form.value)">
-    <fieldset>
-      <label for="kind">Kind of prevision</label>
-      <input type="radio" name="kind" formControlName="kind" value="I"> + Projected Income: <small>Salary, extras</small><br>
-      <input type="radio" name="kind" formControlName="kind" value="O"> - Regular Outgoing: <small>Mortgage, energy, phone</small><br>
-      <label for="date">Date</label>
-      <input type="date" formControlName="date">
-      <label for="description">Description</label>
-      <input type="text" formControlName="description">
-      <label for="amount">Amount</label>
-      <input type="number" formControlName="amount">
-      <input class="button-primary" type="submit" value="Save Prevision" [disabled]="form.invalid">
-    </fieldset>
-  </form>
+  
+	<mat-card>
+		<mat-card-title>
+			<ab-widget-header mode="h3" caption="Set your Previsions" value=""></ab-widget-header>
+		</mat-card-title>
+		<form [formGroup]="form"
+					(submit)="submit(form.value)">
+			<mat-card-content fxLayout="column">
+				<mat-radio-group formControlName="kind">
+					<mat-radio-button value="I">
+						+ Projected Income (Salary, extras)
+					</mat-radio-button>
+					<mat-radio-button value="O">
+						- Regular Outgoing (Mortgage, energy, phone)
+					</mat-radio-button>
+				</mat-radio-group>
+				<mat-form-field>
+					<input matInput
+								placeholder="Date"
+								formControlName="date"
+								[matDatepicker]="datepicker">
+					<mat-datepicker-toggle matSuffix
+																[for]="datepicker"></mat-datepicker-toggle>
+					<mat-datepicker #datepicker></mat-datepicker>
+				</mat-form-field>
+				<mat-form-field>
+					<input matInput
+								placeholder="Description"
+								type="text"
+								formControlName="description">
+				</mat-form-field>
+				<mat-form-field>
+					<input matInput
+								type="number"
+								formControlName="amount">
+				</mat-form-field>
+			</mat-card-content>
+			<mat-card-actions>
+				<button mat-raised-button
+								color="primary"
+								type="submit"
+								[disabled]="form.invalid">Save prevision</button>
+			</mat-card-actions>
+		</form>
+	</mat-card>
   `,
 	styles: []
 })

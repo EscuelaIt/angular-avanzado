@@ -21,18 +21,26 @@ import { SavingsGoal } from "@routes/month/state/models/savings_goal.model";
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `
   <section *ngIf="monthBalance">
-    <form [formGroup]="form" (submit)="submit(form.value)">
-      <fieldset >
-        <section  class="row">
-          <label for="goalToSave">Goal to save</label>
-          <section class="column ">
-            <input type="number" formControlName="goalToSave">
-            <p><small>Maximun {{monthBalance?.savings}}</small></p>
-          </section>
-          <input class="button-primary" type="submit" value="Save Goal" [disabled]="form.invalid">
-        </section>
-      </fieldset>
-    </form>
+		<mat-card>
+			<form [formGroup]="form"
+						(submit)="submit(form.value)">
+				<mat-card-content>
+					<mat-form-field>
+						<input matInput
+									placeholder="Goal to save"
+									type="number"
+									formControlName="goalToSave">
+						<mat-hint align="start">Max.{{monthBalance?.savings}}</mat-hint>
+					</mat-form-field>
+				</mat-card-content>
+				<mat-card-actions>
+					<button mat-raised-button
+									color="primary"
+									type="submit"
+									[disabled]="form.invalid">Save goal</button>
+				</mat-card-actions>
+			</form>
+		</mat-card>
   </section>
   `,
 	styles: []

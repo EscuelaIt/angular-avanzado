@@ -21,23 +21,29 @@ import { SavingsGoal } from "@routes/month/state/models/savings_goal.model";
 	selector: "ab-plan",
 	template: `
     <ab-widget-header mode="h2" caption="Plan your goal to save" value="{{monthBalance.goal}} €"></ab-widget-header>
-    <main class="column">
-      <ab-goal *ngIf="monthBalance.incomes>0" [monthBalance]="monthBalance" (setGoal)="setGoalForMonth($event)"></ab-goal>
-      <section class="row">
-        <section class="column column-40">
-          <ab-prevision class="container"
+    <main >
+      <section>
+        <section>
+          <ab-prevision
             [year]="monthBalance.year"
             [month]="monthBalance.month"
             (saveProjection)="saveNewEntry($event)">
           </ab-prevision>
-        </section>
-        <section class="column column-50 column-offset-10">
-          <ab-incomes class="container"
+				</section>
+				<section>
+					<ab-goal 
+						*ngIf="monthBalance.incomes>0" 
+						[monthBalance]="monthBalance" 
+						(setGoal)="setGoalForMonth($event)">
+					</ab-goal>
+				</section>
+        <section>
+          <ab-incomes
             [projectionsToList]="projectedIncomes"
             (deleteProjection)="deleteAnEntry($event)">
           </ab-incomes>
           <hr>
-          <ab-outgoings class="container"
+          <ab-outgoings
             [projectionsToList]="projectedOutgoings"
             (deleteProjection)="deleteAnEntry($event)">
           </ab-outgoings>
