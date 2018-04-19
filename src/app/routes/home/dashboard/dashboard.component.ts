@@ -10,39 +10,66 @@ import { MonthBalance } from "@routes/month/state/models/month_balance.model";
 	selector: "ab-dashboard",
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `
-  <ab-widget-header mode="h1" caption="Kakebo" value="Monthly balances" ></ab-widget-header>
-  <a [routerLink]="['month', year , month]"> Create or view a balance controller for the current month </a>
-  <table>
-    <thead>
-      <tr>
-        <th>Year</th>
-        <th>Month</th>
-        <th>Incoming</th>
-        <th>Outgoing</th>
-        <th>Expenses</th>
-        <th><em>Goal</em></th>
-        <th><strong>Savings</strong></th>
-        <th>Available</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let balance of balances" >
-        <td><a [routerLink]="['month',balance.year,balance.month]"> {{ balance.year }} </a></td>
-        <td><a [routerLink]="['month',balance.year,balance.month]"> {{ balance.month | monthName }}</a></td>
-        <td>{{ balance.incomes }}</td>
-        <td>{{ balance.outgoings }}</td>
-        <td>{{ balance.expenses }}</td>
-        <td><em>{{ balance.goal }}</em></td>
-        <td><strong>{{ balance.savings }}</strong></td>
-        <td>{{ balance.available }}</td>
-      </tr>
-    </tbody>
-  </table>
+<section>
+  <ab-widget-header mode="h1"
+                     caption="Kakebo"
+                     value="Monthly balances"></ab-widget-header>
+  <a mat-button
+     color="primary"
+     [routerLink]="['month', year , month]"> Create or view a balance controller for the current month </a>
+  <mat-table #table
+             [dataSource]="balances">
+    <ng-container matColumnDef="year">
+      <mat-header-cell *matHeaderCellDef>Year</mat-header-cell>
+      <mat-cell *matCellDef="let element"><a [routerLink]="['month',element.year,element.month]">{{element.year}}</a></mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="month">
+      <mat-header-cell *matHeaderCellDef>Month</mat-header-cell>
+      <mat-cell *matCellDef="let element"><a [routerLink]="['month',element.year,element.month]">{{ element.month }}</a></mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="incoming">
+      <mat-header-cell *matHeaderCellDef>Incomings</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.incomes }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="outgoing">
+      <mat-header-cell *matHeaderCellDef>Outgoing</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.outgoings }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="expenses">
+      <mat-header-cell *matHeaderCellDef>Expenses</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.expenses }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="goal">
+      <mat-header-cell *matHeaderCellDef>Goal</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.goal }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="savings">
+      <mat-header-cell *matHeaderCellDef>Savings</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.savings }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="available">
+      <mat-header-cell *matHeaderCellDef>Available</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.available }}</mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</section>
   `,
 	styles: []
 })
 export class DashboardComponent implements OnInit {
 	@Input() public balances: MonthBalance[];
+	public displayedColumns = [
+		"year",
+		"month",
+		"incoming",
+		"outgoing",
+		"expenses",
+		"goal",
+		"savings",
+		"available"
+	];
 	public year = new Date().getFullYear();
 	public month = new Date().getMonth() + 1;
 

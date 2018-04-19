@@ -20,23 +20,36 @@ import { ValidatePassword } from "@tools/components/password-validator";
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `
   <form *ngIf="form !== undefined" [formGroup]="form" (submit)="submitClick()">
-    <label for="email">Email</label>
-    <input name="email"
-      formControlName="email"
-      type="email"/>
-    <label for="password">Password</label>
-    <input name="password"
-      formControlName="password"
-      type="password"/>
-    <span *ngIf="form?.get('password')?.invalid">password error</span>
-    <input class="button-primary"
-      type="submit"
-      [value]="pageData?.title"
-      [disabled]="form.invalid">
-    <a class="button button-clear"
-      [routerLink]="['..',pageData?.alternate | lowercase]">
-      {{ pageData?.alternate }}
-    </a>
+	<mat-card>
+	<mat-card-title>
+		{{ pageData.title }}
+	</mat-card-title>
+	<mat-card-content fxLayout="column">
+		<mat-form-field>
+			<input matInput
+						 type="email"
+						 placeholder="Email"
+						 formControlName="email">
+		</mat-form-field>
+		<mat-form-field>
+			<input matInput
+						 type="password"
+						 placeholder="Password"
+						 formControlName="password">
+		</mat-form-field>
+	</mat-card-content>
+	<mat-card-actions fxFlex="row"
+										fxLayoutAlign="flex-end center">
+		<button mat-raised-button
+						color="primary"
+						[disabled]="form.invalid">
+			{{ pageData.title }}
+		</button>
+		<a mat-raised-button
+			 mat-primary
+			 [routerLink]="['..',pageData.alternate | lowercase]">{{ pageData.alternate }}</a>
+	</mat-card-actions>
+</mat-card>
   </form>`,
 	styles: []
 })
