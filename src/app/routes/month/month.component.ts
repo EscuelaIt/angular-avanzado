@@ -19,13 +19,13 @@ import { GetJournalEntries } from "@routes/month/state/journal-store/journal-sto
 @Component({
 	selector: "ab-month",
 	template: `
-  <section *ngIf="monthBalance$ | async ">
+  <section *ngIf="monthBalance$ | async ; else noMonthBalance">
     <ab-widget-header mode="h1" caption="Balance on {{month | monthName }} of {{ year }}" value="{{savings$ | async}} €"></ab-widget-header>
-    <section class="row">
-      <aside class="column column-20">
+    <section>
+      <aside >
         <ab-nav [navLinks]="navLinks"></ab-nav>
       </aside>
-      <main class="column float-left">
+      <main>
         <router-outlet></router-outlet>
       </main>
     </section>

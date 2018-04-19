@@ -16,24 +16,49 @@ import { JournalEntry } from "@routes/month/state/models/journal_entry.model";
 	selector: "ab-new-expense",
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `
-  <ab-widget-header mode="h3" caption="Record a new Expense"></ab-widget-header>
+	<mat-card>
+  <mat-card-title>
+		<ab-widget-header mode="h3" caption="Record a new Expense"></ab-widget-header>
+  </mat-card-title>
   <form [formGroup]="form" (submit)="submit(form.value)">
-    <fieldset>
-      <label for="expenseCategory">Category</label>
-      <select id="expenseCategory" formControlName="expenseCategory">
-        <option
-          *ngFor="let expenseCategory of expenseCategories | objectKeys"
-          [value]="expenseCategory">{{ expenseCategory | categoryName }}
-        </option>
-      </select>
-      <label for="date">Date</label>
-      <input type="date" formControlName="date">
-      <label for="description">Description</label>
-      <input type="text" formControlName="description">
-      <label for="amount">Amount</label>
-      <input type="number" formControlName="amount">
-      <input class="button-primary" type="submit" value="Save Expense" [disabled]="form.invalid" >
-    </fieldset>
+	<mat-card-content fxLayout="column">
+	<mat-form-field>
+		<mat-select formControlName="expenseCategory"
+								placeholder="Expense category">
+			<mat-option *ngFor="let expenseCategory of expenseCategories | objectKeys"
+									[value]="expenseCategory">
+				{{ expenseCategory | categoryName }}
+			</mat-option>
+		</mat-select>
+	</mat-form-field>
+	<mat-form-field>
+		<input formControlName="date"
+					 matInput
+					 [matDatepicker]="picker"
+					 placeholder="Date">
+		<mat-datepicker-toggle matSuffix
+													 [for]="picker"></mat-datepicker-toggle>
+		<mat-datepicker #picker></mat-datepicker>
+	</mat-form-field>
+	<mat-form-field>
+		<input matInput
+					 type="number"
+					 formControlName="amount"
+					 placeholder="Amount">
+	</mat-form-field>
+	<mat-form-field>
+		<input matInput
+					 type="text"
+					 placeholder="Description"
+					 formControlName="description">
+	</mat-form-field>
+</mat-card-content>
+<mat-card-actions>
+	<button mat-raised-button
+					color="primary"
+					type="submit"
+					[disabled]="form.invalid">Save expense</button>
+</mat-card-actions>
   </form>
   `,
 	styles: []

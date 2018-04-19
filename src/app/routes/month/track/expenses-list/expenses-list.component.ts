@@ -15,24 +15,30 @@ import { JournalEntry } from "@routes/month/state/models/journal_entry.model";
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `
   <ab-widget-header mode="h3" caption="Expenses" value="{{ totalAmount }} €"></ab-widget-header>
-  <table>
-    <thead>
-      <tr>
-        <th>Category</th>
-        <th>Expense</th>
-        <th>Amount</th>
-        <th>X</th>
-      </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let expense of expensesToList">
-    <td>{{ expense.expenseCategory | categoryName }}</td>
-    <td>{{ expense.description }}</td>
-    <td>{{ expense.amount }}</td>
-    <td><button (click)="delete(expense)">X</button>  </td>
-      </tr>
-    </tbody>
-  </table>
+  <mat-table [dataSource]="expensesToList">
+  <ng-container matColumnDef="expenseCategory">
+    <mat-header-cell *matHeaderCellDef>Category</mat-header-cell>
+    <mat-cell *matCellDef="let expense">{{ expense.expenseCategory | categoryName }}</mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="description">
+    <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
+    <mat-cell *matCellDef="let expense">{{ expense.description }}</mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="amount">
+    <mat-header-cell *matHeaderCellDef>Amount</mat-header-cell>
+    <mat-cell *matCellDef="let expense">{{ expense.amount }}</mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="actions">
+    <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+    <mat-cell *matCellDef="let expense">
+      <button mat-button
+              color="primary"
+              (click)="delete(expense)">X</button>
+    </mat-cell>
+  </ng-container>
+  <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: columnsToDisplay"></mat-row>
+</mat-table>
   `,
 	styles: []
 })
@@ -42,6 +48,12 @@ export class ExpensesListComponent
 	@Output()
 	public deleteExpense = new EventEmitter<JournalEntry>();
 	public totalAmount: number;
+	public columnsToDisplay = [
+		"expenseCategory",
+		"description",
+		"amount",
+		"actions"
+	];
 
 	constructor() {}
 

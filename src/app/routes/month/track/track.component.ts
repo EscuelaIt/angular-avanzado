@@ -18,7 +18,7 @@ import { environment } from "@environments/environment";
       caption="Track your expenses. Left to expend"
       value="{{monthBalance.available}} €">
     </ab-widget-header>
-    <main class="column">
+    <main>
       <section>
         <ab-new-expense
           [year]="monthBalance.year" [month]="monthBalance.month"
