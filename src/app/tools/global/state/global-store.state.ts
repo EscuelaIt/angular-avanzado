@@ -16,18 +16,23 @@ export class GlobalStore {
 
 	private userMessage$ = new Subject<string>();
 	private userToken$ = new Subject<string>();
+	private appVersion$ = new Subject<string>();
 
 	public selectUserMessage$ = this.userMessage$.asObservable();
 	public selectUserToken$ = this.userToken$.asObservable();
+	public selectAppVersion$ = this.appVersion$.asObservable();
 
 	constructor() {}
 
 	public dispatch(action: Action): void {
 		this.state = globalStoreReducer(this.state, action);
-		if (action.type === GlobalActions.ShowUserMessage) {
-			this.userMessage$.next(this.state.userMessage);
-		} else {
-			this.userToken$.next(this.state.userToken);
+		switch (action.type) {
+			case GlobalActions.SetUserToken:
+				this.userMessage$.next(this.state.userMessage);
+			case GlobalActions.ShowUserMessage:
+				this.userToken$.next(this.state.userToken);
+			case GlobalActions.SetAppVersion:
+				this.appVersion$.next(this.state.appVersion);
 		}
 	}
 }

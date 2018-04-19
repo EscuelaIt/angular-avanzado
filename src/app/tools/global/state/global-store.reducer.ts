@@ -16,6 +16,8 @@ export function globalStoreReducer(
 			return { ...state, userToken: action.payload };
 		case GlobalActions.ShowUserMessage:
 			return { ...state, userMessage: action.payload };
+		case GlobalActions.SetAppVersion:
+			return { ...state, appVersion: action.payload };
 		default:
 			return state;
 	}

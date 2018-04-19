@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 
 @Component({
 	selector: "ab-footer",
@@ -8,6 +8,7 @@ import { Component, OnInit } from "@angular/core";
       <div class="clearfix">
         <div class="float-left">
           <em>The japanese art of saving money.</em> 
+          <small>V: {{version}}</small>
         </div> 
         <div class="float-right"> - Coded by <a href="https://twitter.com/albertobasalo">Alberto Basalo</a></div>
       </div>
@@ -17,6 +18,7 @@ import { Component, OnInit } from "@angular/core";
 	styles: []
 })
 export class FooterComponent implements OnInit {
+	@Input() public version: string;
 	constructor() {}
 
 	ngOnInit() {}

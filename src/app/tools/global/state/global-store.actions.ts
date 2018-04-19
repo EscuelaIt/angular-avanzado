@@ -2,7 +2,8 @@ import { Injectable } from "@angular/core";
 
 export enum GlobalActions {
 	ShowUserMessage = "[Global] ShowUserMessage",
-	SetUserToken = "[Global] SetUserToken"
+	SetUserToken = "[Global] SetUserToken",
+	SetAppVersion = "[Global] SetAppVersion"
 }
 
 export interface Action {
@@ -17,5 +18,10 @@ export class ShowUserMessage implements Action {
 
 export class SetUserToken implements Action {
 	public readonly type = GlobalActions.SetUserToken;
+	constructor(public readonly payload: string) {}
+}
+
+export class SetAppVersion implements Action {
+	public readonly type = GlobalActions.SetAppVersion;
 	constructor(public readonly payload: string) {}
 }
