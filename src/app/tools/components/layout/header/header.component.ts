@@ -1,4 +1,9 @@
-import { Component, OnInit } from "@angular/core";
+import {
+	Component,
+	OnInit,
+	Output,
+	EventEmitter
+} from "@angular/core";
 import { GlobalStore } from "@tools/global/state/global-store.state";
 import { Observable } from "rxjs";
 
@@ -6,24 +11,30 @@ import { Observable } from "rxjs";
 	selector: "ab-header",
 	template: `
     <header class="container">
-      <a class="button button-clear" routerLink="">Kakebo</a>
-      <a class="button button-clear" routerLink="about">About</a>
-      <a *ngIf="isAnonymous;else welcome" class="button button-clear" routerLink="credentials/login">Login</a>
-      <ng-template #welcome>Hello</ng-template>
-      <span [ngClass]="['float-right']">{{ message$ | async }}</span>
+			<mat-toolbar color="primary">
+				<button mat-icon-button
+								(click)="onToggleSidenav()">
+					<mat-icon>menu</mat-icon>
+				</button>
+				<h1><a mat-button routerLink="">Kakebo</a></h1>
+				<span *ngIf="isAnonymous;else welcome"> <a mat-button routerLink="credentials/login">LogIn</a></span>
+				<ng-template #welcome>Hello</ng-template>
+			</mat-toolbar>
     </header>
   `,
 	styles: []
 })
 export class HeaderComponent implements OnInit {
 	public isAnonymous = true;
-	public message$: Observable<string>;
+	@Output() toggleSidenav = new EventEmitter<void>();
 	constructor(private store: GlobalStore) {}
 
 	ngOnInit() {
 		this.store.selectUserToken$.subscribe(
 			(res: string) => (this.isAnonymous = res === "")
 		);
-		this.message$ = this.store.selectUserMessage$;
+	}
+	onToggleSidenav() {
+		this.toggleSidenav.emit();
 	}
 }

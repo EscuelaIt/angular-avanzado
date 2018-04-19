@@ -26,6 +26,7 @@
     "@angular/common": "^6.0.0-rc.5",
     "@angular/compiler": "^6.0.0-rc.5",
     "@angular/core": "^6.0.0-rc.5",
+    "@angular/flex-layout": "^6.0.0-beta.15",
     "@angular/forms": "^6.0.0-rc.5",
     "@angular/http": "^6.0.0-rc.5",
     "@angular/material": "^6.0.0-rc.12",
