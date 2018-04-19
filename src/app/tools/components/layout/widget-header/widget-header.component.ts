@@ -10,17 +10,19 @@ import {
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `
   <header >
-    <ng-container [ngSwitch]="mode">
-      <ng-container *ngSwitchCase="'h1'">
-        <h1>{{ caption }} <span >{{value}}</span></h1>  
+    <mat-card>
+      <ng-container [ngSwitch]="mode">
+        <ng-container *ngSwitchCase="'h1'">
+          <mat-card-title fxLayout="row" fxLayoutAlign="space-between center" >{{ caption }} <span >{{value}}</span></mat-card-title>
+        </ng-container>
+        <ng-container *ngSwitchCase="'h2'">
+          <mat-card-title fxLayoutAlign="space-between center">{{ caption }} <span >{{value}}</span></mat-card-title>
+        </ng-container>
+        <ng-container *ngSwitchCase="'h3'">
+          <mat-card-subtitle fxLayoutAlign="space-between center" class="mat-display-1">{{ caption }} <span >{{value}}</span></mat-card-subtitle>
+        </ng-container>
       </ng-container>
-      <ng-container *ngSwitchCase="'h2'">
-        <h2>{{ caption }} <span >{{value}}</span></h2>  
-      </ng-container>
-      <ng-container *ngSwitchCase="'h3'">
-        <h3>{{ caption }} <span >{{value}}</span></h3>  
-      </ng-container>
-    </ng-container>
+    </mat-card>
   </header>
   `,
 	styles: ["header { padding: 0px !important;}"]

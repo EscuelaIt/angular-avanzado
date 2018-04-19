@@ -7,30 +7,16 @@ import { MonthStore } from "@routes/month/state/month.state";
 	selector: "ab-review",
 	template: `
   <ab-widget-header mode="h2" caption="Review what you do with your incomes of" value="{{monthBalance.incomes}} €"></ab-widget-header>
+  <p>
   <main>
-    <dd>
-      <dt>Total Income</dt>
-      <dd><strong>{{monthBalance.incomes}} €</strong></dd>
-    <dl>
-      <dt>Regular Outgoings</dt>
-      <dd><strong>{{monthBalance.outgoings}} €</strong></dd>
-    </dl>
-    <dl>
-      <dt>Expenses</dt>
-      <dd><strong>{{monthBalance.expenses}} €</strong></dd>
-    </dl>
-    <dl>
-      <dt>Savings</dt>
-      <dd><strong>{{monthBalance.savings}} €</strong></dd>
-    </dl>
-    <dl>
-      <dt>Goal</dt>
-      <dd><strong>{{monthBalance.goal}} €</strong></dd>
-    </dl>
-    <dl>
-      <dt>Available</dt>
-      <dd><strong>{{monthBalance.available}} €</strong></dd>
-    </dl>
+    <mat-chip-list>
+      <mat-chip color="primary" selected="true">Total Income: {{monthBalance.incomes}} €</mat-chip>
+      <mat-chip color="warn" selected="true">Regular Outgoings : {{monthBalance.outgoings}} €</mat-chip>
+      <mat-chip color="warn" selected="true">Expenses : {{monthBalance.expenses}} €</mat-chip>
+      <mat-chip color="primary" selected="true">Savings : {{monthBalance.savings}} €</mat-chip>
+      <mat-chip color="accent" selected="true">Goal : {{monthBalance.goal}} €</mat-chip>
+      <mat-chip color="primary" selected="true">Available : {{monthBalance.available}} €</mat-chip>
+    </mat-chip-list>
   </main>
   `,
 	styles: []
