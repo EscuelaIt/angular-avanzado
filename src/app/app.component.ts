@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { PwaService } from "@tools/global/pwa.service";
 
 @Component({
 	selector: "ab-root",
@@ -16,5 +17,7 @@ import { Component } from "@angular/core";
 	styles: []
 })
 export class AppComponent {
-	title = "kab";
+	constructor(private pwa: PwaService) {
+		this.pwa.checkForUpdates();
+	}
 }

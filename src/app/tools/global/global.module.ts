@@ -7,6 +7,7 @@ import { NgModule } from "@angular/core";
 import { CatchInterceptorService } from "@tools/global/interceptors/catch-interceptor.service";
 import { TokenInterceptorService } from "@tools/global/interceptors/token-interceptor.service";
 import { GlobalStore } from "@tools/global/state/global-store.state";
+import { PwaService } from "@tools/global/pwa.service";
 
 @NgModule({
 	imports: [CommonModule, HttpClientModule],
@@ -21,7 +22,8 @@ import { GlobalStore } from "@tools/global/state/global-store.state";
 			provide: HTTP_INTERCEPTORS,
 			useClass: CatchInterceptorService,
 			multi: true
-		}
+		},
+		PwaService
 	]
 })
 export class GlobalModule {}
