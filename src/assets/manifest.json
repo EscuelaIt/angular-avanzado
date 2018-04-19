@@ -4,7 +4,7 @@
   "description": "Sample app made with Angular",
   "theme_color": "#9b4dca",
   "background_color": "#9b4dca",
-  "display": "browser",
+  "display": "standalone",
   "Scope": "/",
   "start_url": "/",
   "icons": [
