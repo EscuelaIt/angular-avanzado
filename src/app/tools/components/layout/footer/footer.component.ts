@@ -8,9 +8,8 @@ import { Component, OnInit, Input } from "@angular/core";
       <div class="clearfix">
         <div class="float-left">
           <em>The japanese art of saving money.</em> 
-          <small>V: {{version}}</small>
         </div> 
-        <div class="float-right"> - Coded by <a href="https://twitter.com/albertobasalo">Alberto Basalo</a></div>
+        <div class="float-right"> - Coded by <a href="https://twitter.com/albertobasalo">Alberto Basalo</a><small>v.: {{version}}</small></div>
       </div>
     </blockquote>
   </footer>

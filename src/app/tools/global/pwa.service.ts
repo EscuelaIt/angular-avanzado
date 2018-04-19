@@ -10,12 +10,12 @@ import {
 @Injectable()
 export class PwaService {
 	constructor(
-		private swUpate: SwUpdate,
+		private swUpdate: SwUpdate,
 		private global: GlobalStore
 	) {}
 
 	checkForUpdates() {
-		this.swUpate.available.subscribe(
+		this.swUpdate.available.subscribe(
 			(event: UpdateAvailableEvent) => {
 				const currentVersion = { ...event.current };
 				const newVersion = { ...event.available };
@@ -32,7 +32,7 @@ export class PwaService {
 				const userResponse = confirm(message + question);
 
 				if (userResponse) {
-					this.swUpate.checkForUpdate().then(() => {
+					this.swUpdate.checkForUpdate().then(() => {
 						this.global.dispatch(
 							new SetAppVersion(newVersion.hash)
 						);
