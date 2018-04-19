@@ -4,7 +4,7 @@ import { Component, OnInit, Input } from "@angular/core";
 	selector: "ab-footer",
 	template: `
   <footer>
-    <mat-toolbar color="primary">
+    <mat-toolbar color="accent">
       <p>The japanese art of saving money - Coded by
         <a mat-button href="https://twitter.com/albertobasalo">Alberto Basalo</a>
         <i> - v.: {{version}}</i>
