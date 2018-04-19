@@ -17,6 +17,7 @@ import { Observable } from "rxjs";
 					<mat-icon>menu</mat-icon>
 				</button>
 				<h1><a mat-button routerLink="">Kakebo</a></h1>
+				<a mat-button routerLink="about">About</a>
 				<span *ngIf="isAnonymous;else welcome"> <a mat-button routerLink="credentials/login">LogIn</a></span>
 				<ng-template #welcome>Hello</ng-template>
 			</mat-toolbar>
