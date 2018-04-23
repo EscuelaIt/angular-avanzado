@@ -1,14 +1,21 @@
-<div fxLayout="column" style="height:100vh;">
-  <ab-header (toggleSidenav)="onToggleSidenav()" fxFlex="60px">
+<div fxLayout="column"
+     style="height:100vh;">
+  <ab-header (toggleSidenav)="onToggleSidenav()"
+             fxFlex="60px">
   </ab-header>
   <mat-sidenav-container fxFlex="grow">
-    <mat-sidenav #sidenav mode="over" opened="false" fxFlex="200px">
+    <mat-sidenav #sidenav
+                 mode="over"
+                 opened="false"
+                 fxFlex="200px">
       <ab-sidenav></ab-sidenav>
     </mat-sidenav>
-    <mat-sidenav-content fxLayout="column" class="mat-typography">
+    <mat-sidenav-content fxLayout="column"
+                         class="mat-typography">
       <router-outlet></router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>
-  <ab-footer fxFlex="60px" [version]="version$ | async">
+  <ab-footer fxFlex="60px"
+             [version]="version$ | async">
   </ab-footer>
 </div>

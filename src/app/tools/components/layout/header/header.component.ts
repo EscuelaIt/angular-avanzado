@@ -14,7 +14,7 @@ import { Observable } from "rxjs";
 			<mat-toolbar color="primary">
 				<button mat-icon-button
 								(click)="onToggleSidenav()">
-					<mat-icon>menu</mat-icon>
+					<mat-icon>book</mat-icon>
 				</button>
 				<h1><a mat-button routerLink="">Kakebo</a></h1>
 				<a mat-button routerLink="about">About</a>

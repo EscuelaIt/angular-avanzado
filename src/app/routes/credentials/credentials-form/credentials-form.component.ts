@@ -21,9 +21,6 @@ import { ValidatePassword } from "@tools/components/password-validator";
 	template: `
   <form *ngIf="form !== undefined" [formGroup]="form" (submit)="submitClick()">
 	<mat-card>
-	<mat-card-title>
-		{{ pageData.title }}
-	</mat-card-title>
 	<mat-card-content fxLayout="column">
 		<mat-form-field>
 			<input matInput
