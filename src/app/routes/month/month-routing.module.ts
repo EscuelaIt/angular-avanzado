@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import { Routes, RouterModule } from "@angular/router";
+import { RouterModule, Routes } from "@angular/router";
 import { MonthComponent } from "@routes/month/month.component";
 
 const routes: Routes = [
@@ -7,6 +7,11 @@ const routes: Routes = [
     path: "",
     component: MonthComponent,
     children: [
+      {
+        path: "",
+        redirectTo: "plan",
+        pathMatch: "full"
+      },
       {
         path: "plan",
         loadChildren: "@routes/month/plan/plan.module#PlanningModule"
@@ -27,4 +32,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ControlRoutingModule {}
+export class ControlRoutingModule { }

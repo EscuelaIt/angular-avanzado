@@ -14,7 +14,7 @@ import { Component, OnInit, Input } from "@angular/core";
 	styles: []
 })
 export class FooterComponent implements OnInit {
-	@Input() public version: string;
+	@Input() public version = '?';
 	constructor() {}
 
 	ngOnInit() {}
