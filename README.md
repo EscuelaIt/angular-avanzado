@@ -1,10 +1,14 @@
 # Angular Avanzado
 
-Sigue las ramas del tutorial
+Angular Universal
 
-- `ng generate universal --clientProject=nombre_del_proyecto` [https://github.com/angular/angular-cli/wiki/generate-universal](Doc)
+- `ng generate universal --clientProject=angular-avanzado` 
 
-- ng run angular-avanzado:server [https://angular.io/guide/universal](Doc)
+[Documentación](https://github.com/angular/angular-cli/wiki/generate-universal)
+
+- ng run angular-avanzado:server 
+
+[Universal guide](https://angular.io/guide/universal)
 
 - Añadir los módulos `FlexLayoutServerModule` y `ModuleMapLoader` al `app.server.module.ts`
 
